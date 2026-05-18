@@ -1,0 +1,8 @@
+{
+  "name": "Bar dos primos",
+  "description": "Restaurante e Bar moderno com comidas premium, drinks artesanais e a melhor atmosfera social.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
