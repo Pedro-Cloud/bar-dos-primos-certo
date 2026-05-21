@@ -17,6 +17,8 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+// @ts-ignore
+import logoImg from './assets/images/logo_primos_clean_1779384509346.png';
 
 // --- Types ---
 interface MenuItem {
@@ -131,9 +133,9 @@ export default function App() {
       {/* --- Sticky Navbar --- */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-charcoal/90 backdrop-blur-lg border-b border-white/5 py-4' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center text-white">
-          <div className="flex items-center gap-2">
-            <Beer className="text-primary w-8 h-8" />
-            <span className="font-display font-bold text-2xl tracking-tighter uppercase italic">Bar dos Primos</span>
+          <div className="flex items-center gap-3">
+            <img src={logoImg} alt="Logo Bar dos Primos" className="w-10 h-10 object-contain rounded-full border border-primary/20 brightness-110 shadow-md shadow-primary/10" />
+            <span className="font-display font-bold text-2xl tracking-tighter uppercase italic text-glow-amber">Bar dos Primos</span>
           </div>
           
           <div className="hidden md:flex items-center gap-8 font-medium">
@@ -221,6 +223,25 @@ export default function App() {
               </div>
             </div>
           </motion.div>
+
+          {/* Right Column: Hero Mascot Logo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center items-center relative w-full h-full min-h-[300px] md:min-h-[450px]"
+          >
+            {/* Ambient Back Glow */}
+            <div className="absolute w-80 h-80 md:w-[28rem] md:h-[28rem] rounded-full bg-primary/20 blur-[90px] animate-pulse"></div>
+            
+            {/* Mascot Logo - Perfectly transparent background with no outer artificial borders */}
+<div className="relative z-10 rounded-full p-0 bg-transparent overflow-hidden max-w-[380px] xs:max-w-[420px] md:max-w-[580px] lg:max-w-[650px] flex items-center justify-center drop-shadow-[0_0_35px_rgba(245,158,11,0.25)] hover:scale-105 hover:rotate-1 transition-all duration-500 ease-out">
+  <img 
+    src={logoImg} 
+    alt="Bar dos Primos - Brasa e Conversa Logo" 
+    className="w-full h-auto rounded-full object-contain" 
+  />
+</div>          </motion.div>
         </div>
       </section>
 
@@ -337,9 +358,9 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-12 mb-16">
             <div className="md:col-span-1">
-              <div className="flex items-center gap-2 mb-6">
-                <Beer className="text-primary w-8 h-8" />
-                <span className="font-display font-bold text-2xl tracking-tighter uppercase italic">Bar dos Primos</span>
+              <div className="flex items-center gap-3 mb-6">
+                <img src={logoImg} alt="Logo Bar dos Primos" className="w-12 h-12 object-contain rounded-full border border-primary/20 shadow-md shadow-primary/5" />
+                <span className="font-display font-bold text-2xl tracking-tighter uppercase italic text-glow-amber">Bar dos Primos</span>
               </div>
               <p className="text-white/40 mb-8 max-w-xs">Unindo amigos e compartilhando histórias desde 2018.</p>
               <div className="flex items-center gap-4">
