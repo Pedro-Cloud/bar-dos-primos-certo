@@ -14,7 +14,8 @@ import {
   Users,
   CheckCircle,
   Menu as MenuIcon,
-  MessageSquare
+  MessageSquare,
+  Mail
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 // @ts-ignore
@@ -34,18 +35,42 @@ interface MenuItem {
 
 // --- Data ---
 const MENU_ITEMS: MenuItem[] = [
-  // Drinks
-  { id: 'd1', name: 'Chopp Pilsen Extra', price: 'R$ 14', description: 'Chopp gelado em caneca zero grau.', category: 'drinks', popular: true },
-  { id: 'd2', name: 'IPA Artesanal da Casa', price: 'R$ 18', description: 'Notas cítricas e amargor equilibrado.', category: 'drinks' },
-  // Cocktails
-  { id: 'c1', name: 'Negroni Defumado', price: 'R$ 32', description: 'Gin premium, Vermute e Campari com fumaça de carvalho.', category: 'cocktails', chefChoice: true },
-  { id: 'c2', name: 'Mula de Moscou (Primos)', price: 'R$ 28', description: 'Versão especial com espuma de gengibre artesanal.', category: 'cocktails', popular: true },
+  // Drinks (Cervejas)
+  { id: 'd1', name: 'Heineken Garrafa 600 ml', price: 'R$ 18', description: 'Cerveja premium Heineken estupidamente gelada.', category: 'drinks' },
+  { id: 'd2', name: 'Balde Heineken (3 un.)', price: 'R$ 50', description: 'Leve 3 garrafas Heineken 600ml bem geladas com desconto.', category: 'drinks', popular: true },
+  { id: 'd3', name: 'Heineken Long Neck', price: 'R$ 12', description: 'Heineken long neck súper gelada.', category: 'drinks' },
+  { id: 'd4', name: 'Balde Heineken Long Neck (5 un.)', price: 'R$ 50', description: 'Balde com 5 Heineken long necks super geladas.', category: 'drinks' },
+  { id: 'd5', name: 'Cerveja Original 600 ml', price: 'R$ 16', description: 'Original gelada no ponto perfeito.', category: 'drinks' },
+  { id: 'd6', name: 'Balde Cerveja Original (3 un.)', price: 'R$ 45', description: 'Leve 3 garrafas de Cerveja Original 600ml em balde com muito gelo.', category: 'drinks', popular: true },
+  // Cocktails (Drinks)
+  { id: 'c1', name: 'Caipirinha', price: 'R$ 25', description: 'Caipirinha tradicional de cachaça. Nos sabores limão, morango ou maracujá.', category: 'cocktails', popular: true },
+  { id: 'c2', name: 'Caipiroska', price: 'R$ 35', description: 'Caipirosca com vodka premium. Nos sabores limão, morango ou maracujá.', category: 'cocktails', chefChoice: true },
+  { id: 'c3', name: 'Smirnoff Ice', price: 'R$ 12', description: 'A clássica e refrescante bebida mista gaseificada sabor limão.', category: 'cocktails' },
+  { id: 'c4', name: 'Xeque Mate', price: 'R$ 15', description: 'Combinação perfeita e refrescante de chá mate, rum, guaraná e limão.', category: 'cocktails', popular: true },
+  { id: 'c5', name: 'Campari (Dose)', price: 'R$ 20', description: 'Dose do clássico bitter italiano aromático com rodela de laranja.', category: 'cocktails' },
+  { id: 'c6', name: 'Vodka (Dose)', price: 'R$ 30', description: 'Dose de vodka premium servida bem gelada.', category: 'cocktails' },
+  { id: 'c7', name: 'Whisky (Dose)', price: 'R$ 35', description: 'Dose de whisky de qualidade selecionada.', category: 'cocktails' },
   // Platters
-  { id: 'p1', name: 'Tábua dos Primos', price: 'R$ 89', description: 'Mix de carnes defumadas, queijos artesanais e pães da casa.', category: 'platters', popular: true },
-  { id: 'p2', name: 'Bolinho de Costela', price: 'R$ 42', description: '6 unidades recheadas com costela desfiada e queijo.', category: 'platters' },
-  // Mains
-  { id: 'm1', name: 'Hambúrguer Defumado', price: 'R$ 46', description: '200g de blend bovino, cheddar real e bacon crocante.', category: 'mains', chefChoice: true },
-  { id: 'm2', name: 'Filé com Aligot', price: 'R$ 72', description: 'Medalhão de filé mignon com purê elástico de queijos.', category: 'mains' },
+  { id: 'p3', name: 'Espeto de Carne', price: 'R$ 10', description: 'Grelhado na brasa à perfeição. Acompanha molho especial de alho e farofa.', category: 'platters', popular: true },
+  { id: 'p4', name: 'Espeto de Frango', price: 'R$ 10', description: 'Peito de frango marinado e grelhado. Acompanha molho especial de alho e farofa.', category: 'platters' },
+  { id: 'p5', name: 'Espeto de Coração', price: 'R$ 10', description: 'Coraçãozinho temperado na grelha. Acompanha molho especial de alho e farofa.', category: 'platters' },
+  { id: 'p6', name: 'Espeto de Kafta', price: 'R$ 10', description: 'Kafta de carne bovina temperada e assada. Acompanha molho especial de alho e farofa.', category: 'platters' },
+  { id: 'p7', name: 'Espeto de Linguiça', price: 'R$ 8', description: 'Saborosa linguiça grelhada na brasa. Acompanha molho especial de alho e farofa.', category: 'platters' },
+  { id: 'p8', name: 'Pão de Alho', price: 'R$ 8', description: 'Pão de alho super crocante e cremoso. Acompanha molho especial de alho e farofa.', category: 'platters', popular: true },
+  // Mains (Almoço)
+  { id: 'm1', name: 'Segunda: Carne de Panela', price: 'R$ 29,90', description: 'Gostosa carne de panela cozida lentamente com legumes e toque caseiro. Acompanha arroz, feijão fresco, salada e batatas fritas.', category: 'mains' },
+  { id: 'm2', name: 'Terça: Bife a Rolê', price: 'R$ 29,90', description: 'Bife recheado com cenoura e bacon cozido no molho de tomate. Acompanha arroz, feijão, purê de batata e salada.', category: 'mains' },
+  { id: 'm3', name: 'Quarta: Feijoada Completa', price: 'R$ 39,90 - R$ 99,90', description: 'Nossa tradicional feijoada completa. Opções: Individual por R$ 39,90, para 2 pessoas por R$ 69,90 ou para 4 pessoas por R$ 99,90. Acompanha bisteca, couve, torresmo, arroz e farofa.', category: 'mains', popular: true },
+  { id: 'm4_1', name: 'Quinta: Parmegiana de Carne', price: 'R$ 39,90', description: 'Parmegiana de carne bovina crocante gratinada com queijo derretido, molho de tomate artesanal, arroz e batatas fritas temperadas.', category: 'mains' },
+  { id: 'm4_2', name: 'Quinta: Macarrão com Frango ao Molho', price: 'R$ 28,90', description: 'Suculento macarrão com frango ao delicioso molho vermelho caseiro.', category: 'mains' },
+  { id: 'm5_1', name: 'Sexta: Tilápia na Manteiga', price: 'R$ 39,90', description: 'Filé de tilápia grelhado na manteiga com ervas finas. Acompanha arroz, purê de batata e salada.', category: 'mains' },
+  { id: 'm5_2', name: 'Sexta: Strogonoff de Frango', price: 'R$ 32,90', description: 'Strogonoff de frango cremoso clássico com champignon e batata palha crocante. Acompanha arroz branco.', category: 'mains' },
+  { id: 'm6', name: 'Sábado: Feijoada Completa', price: 'R$ 39,90 - R$ 99,90', description: 'Nossa clássica feijoada para animar o sábado. Opções: Individual por R$ 39,90, para 2 pessoas por R$ 69,90 ou para 4 pessoas por R$ 99,90 com acompanhamentos completos incluindo bisteca, couve, torresmo, arroz e farofa.', category: 'mains', chefChoice: true },
+  { id: 'm7', name: 'Bife Acebolado (Todos os dias)', price: 'R$ 24,90', description: 'Disponível diariamente. Bife de carne grelhado e coberto com cebolas caramelizadas. Acompanha arroz, feijão, batata frita temperada e salada.', category: 'mains' },
+  { id: 'm8', name: 'Linguiça Calabresa (Todos os dias)', price: 'R$ 24,90', description: 'Disponível diariamente. Deliciosa calabresa acebolada grelhada na chapa. Acompanha arroz, feijão, batata frita temperada e salada.', category: 'mains' },
+  { id: 'm9', name: 'Linguiça Toscana (Todos os dias)', price: 'R$ 24,90', description: 'Disponível diariamente. Linguiça toscana assada na brasa. Acompanha arroz, feijão, batata frita temperada e salada.', category: 'mains' },
+  { id: 'm10', name: 'Frango Grelhado (Todos os dias)', price: 'R$ 24,90', description: 'Disponível diariamente. Peito de frango grelhado à perfeição na brasa. Acompanha arroz, feijão, batata frita temperada e salada.', category: 'mains' },
+  { id: 'm11', name: 'O Prato da Casa (Todos os dias)', price: 'R$ 34,90', description: 'Disponível diariamente. Acompanha feijão tropeiro, arroz, mandioca na manteiga e 2 espetos da sua escolha: carne, kafta, linguiça, frango ou coração.', category: 'mains', popular: true },
 ];
 
 const REVIEWS = [
@@ -60,6 +85,35 @@ export default function App() {
   const [isOpenNow, setIsOpenNow] = useState(false);
   const [reservationStep, setReservationStep] = useState(1);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  // Reservation states
+  const [resName, setResName] = useState('');
+  const [resDate, setResDate] = useState('');
+  const [resGuests, setResGuests] = useState(2);
+  const [resTime, setResTime] = useState('');
+  const [valError, setValError] = useState('');
+
+  // Handle close modal safely resting states
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setReservationStep(1);
+    setResName('');
+    setResDate('');
+    setResGuests(2);
+    setResTime('');
+    setValError('');
+  };
+
+  // Compile WhatsApp URL dynamically
+  const whatsappUrl = useMemo(() => {
+    const formattedDate = resDate ? resDate.split('-').reverse().join('/') : '';
+    const message = `Olá! Gostaria de reservar uma mesa no Bar dos Primos:\n\n` +
+      `👤 Nome: ${resName || 'Não informado'}\n` +
+      `📅 Data: ${formattedDate || 'Não informada'}\n` +
+      `👥 Pessoas: ${resGuests} ${resGuests === 1 ? 'pessoa' : 'pessoas'}\n` +
+      `⏰ Horário: ${resTime || 'Não informado'}`;
+    return `https://wa.me/5511986438100?text=${encodeURIComponent(message)}`;
+  }, [resName, resDate, resGuests, resTime]);
 
   // Check if open logic
   useEffect(() => {
@@ -97,13 +151,13 @@ export default function App() {
     "image": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b",
     "@id": "",
     "url": window.location.href,
-    "telephone": "+551199999999",
+    "telephone": "+5511986438100",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "Rua das Palmeiras, 123",
-      "addressLocality": "São Paulo",
+      "streetAddress": "Rua Jose Ataliba Ortiz 615",
+      "addressLocality": "Parque São Domingos",
       "addressRegion": "SP",
-      "postalCode": "01226-010",
+      "postalCode": "05131-000",
       "addressCountry": "BR"
     },
     "geo": {
@@ -138,13 +192,13 @@ export default function App() {
             <span className="font-display font-bold text-2xl tracking-tighter uppercase italic text-glow-amber">Bar dos Primos</span>
           </div>
           
-          <div className="hidden md:flex items-center gap-8 font-medium">
+          <div className="hidden md:flex items-center gap-6 font-medium">
             <a href="#menu" className="hover:text-primary transition-colors">Cardápio</a>
             <a href="#vibe" className="hover:text-primary transition-colors">Vibe</a>
             <a href="#contato" className="hover:text-primary transition-colors">Localização</a>
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="bg-primary hover:bg-accent text-charcoal-dark px-6 py-2.5 rounded-full font-bold transition-all shadow-lg active:scale-95"
+              className="bg-primary hover:bg-accent text-charcoal-dark px-5 py-2.5 rounded-full font-bold transition-all shadow-lg active:scale-95 text-sm"
             >
               Reservar Mesa
             </button>
@@ -191,17 +245,25 @@ export default function App() {
               Onde o rústico encontra o moderno. Gastronomia de autor, canecas zero grau e o melhor clima de SP.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+              <a 
+                href="https://wa.me/5511986438100?text=Ol%C3%A1%21%20Gostaria%20de%20fazer%20um%20pedido."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-green-600 hover:bg-green-500 text-white px-8 py-3.5 rounded-full font-bold text-lg transition-all shadow-2xl flex items-center justify-center gap-2 active:scale-95"
+              >
+                <MessageSquare size={20} />
+                Peça agora
+              </a>
               <button 
                 onClick={() => setIsModalOpen(true)}
-                className="bg-primary hover:bg-accent text-charcoal-dark px-10 py-4 rounded-full font-bold text-lg transition-all shadow-2xl flex items-center justify-center gap-2"
+                className="bg-primary hover:bg-accent text-charcoal-dark px-8 py-3.5 rounded-full font-bold text-lg transition-all shadow-lg active:scale-95"
               >
-                Reservar agora
-                <ChevronRight size={20} />
+                Reservar Mesa
               </button>
               <a 
                 href="#menu"
-                className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-10 py-4 rounded-full font-bold text-lg transition-all flex items-center justify-center"
+                className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-8 py-3.5 rounded-full font-bold text-lg transition-all flex items-center justify-center active:scale-95"
               >
                 Ver Cardápio
               </a>
@@ -254,11 +316,11 @@ export default function App() {
           </div>
 
           {/* Tabs */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
             {[ 
-              { id: 'platters', label: 'Petiscos', icon: Utensils },
-              { id: 'mains', label: 'Principais', icon: MenuIcon },
-              { id: 'drinks', label: 'Chopps', icon: Beer },
+              { id: 'platters', label: 'Espetos', icon: Utensils },
+              { id: 'mains', label: 'Almoço', icon: MenuIcon },
+              { id: 'drinks', label: 'Cervejas', icon: Beer },
               { id: 'cocktails', label: 'Drinks', icon: Martini },
             ].map(tab => (
               <button
@@ -270,6 +332,29 @@ export default function App() {
                 {tab.label}
               </button>
             ))}
+          </div>
+
+          {/* Schedule Banner depending on active option */}
+          <div className="flex justify-center mb-12">
+            {activeTab === 'mains' ? (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="inline-flex items-center gap-2.5 bg-primary/10 border border-primary/20 text-primary px-5 py-3 rounded-2xl text-sm font-semibold tracking-wide shadow-sm"
+              >
+                <Clock size={16} />
+                <span>Horário de almoço: <strong>segunda a sábado, das 11h às 15h</strong></span>
+              </motion.div>
+            ) : (
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="inline-flex items-center gap-2.5 bg-white/5 border border-white/10 text-white/70 px-5 py-3 rounded-2xl text-xs sm:text-sm font-medium tracking-wide shadow-sm"
+              >
+                <Clock size={16} />
+                <span>Espetos, porções e bebidas servidos durante o funcionamento regular</span>
+              </motion.div>
+            )}
           </div>
 
           {/* Grid */}
@@ -329,10 +414,15 @@ export default function App() {
               </div>
 
               <div className="mt-12">
-                <button className="flex items-center gap-3 bg-white/5 hover:bg-white/10 px-6 py-4 rounded-xl border border-white/10 transition-all">
+                <a 
+                  href="https://www.instagram.com/bardosprimos615" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex items-center gap-3 bg-white/5 hover:bg-white/10 px-6 py-4 rounded-xl border border-white/10 transition-all inline-flex hover:border-primary/50"
+                >
                   <Instagram className="text-pink-500" />
-                  <span className="font-bold">Siga a @bardosprimos no IG</span>
-                </button>
+                  <span className="font-bold">Siga o @bardosprimos615 no Instagram</span>
+                </a>
               </div>
             </div>
 
@@ -364,26 +454,55 @@ export default function App() {
               </div>
               <p className="text-white/40 mb-8 max-w-xs">Unindo amigos e compartilhando histórias desde 2018.</p>
               <div className="flex items-center gap-4">
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-charcoal-dark transition-all"><Instagram size={20} /></a>
-                <a href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-charcoal-dark transition-all"><MessageSquare size={20} /></a>
+                <a href="https://www.instagram.com/bardosprimos615" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-charcoal-dark transition-all" title="Instagram"><Instagram size={20} /></a>
+                <a href="https://wa.me/5511986438100" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-charcoal-dark transition-all" title="WhatsApp"><MessageSquare size={20} /></a>
+                <a href="mailto:renan.spnight@hotmail.com" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-charcoal-dark transition-all" title="Enviar E-mail"><Mail size={20} /></a>
               </div>
             </div>
 
             <div>
               <h4 className="font-bold text-lg mb-6 flex items-center gap-2"><MapPin size={18} className="text-primary" /> Localização</h4>
-              <p className="text-white/60 mb-2">Rua das Palmeiras, 123</p>
-              <p className="text-white/60">Santa Cecília, São Paulo - SP</p>
-              <a href="#" className="text-primary text-sm font-bold mt-4 inline-block hover:underline">Abrir no Maps</a>
+              <p className="text-white/60 mb-1">Rua Jose Ataliba Ortiz 615</p>
+              <p className="text-white/60 mb-4 col-span-2">Parque São Domingos - SP, 05131-000</p>
+              <p className="text-white/60 text-sm mb-1 mt-4">E-mail: <a href="mailto:renan.spnight@hotmail.com" className="hover:text-primary transition-colors underline underline-offset-2">renan.spnight@hotmail.com</a></p>
+              <p className="text-white/60 text-sm">WhatsApp: <a href="https://wa.me/5511986438100" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors underline underline-offset-2">(11) 98643-8100</a></p>
+              <a href="https://maps.google.com/?q=Rua+Jose+Ataliba+Ortiz+615+Parque+Sao+Domingos+SP" target="_blank" rel="noopener noreferrer" className="text-primary text-sm font-bold mt-4 inline-block hover:underline">Abrir no Maps</a>
             </div>
 
             <div>
               <h4 className="font-bold text-lg mb-6 flex items-center gap-2"><Clock size={18} className="text-primary" /> Horários</h4>
-              <ul className="text-white/60 space-y-2">
-                <li className="flex justify-between"><span>Ter - Qui</span> <span className="font-bold text-primary">17h - 01h</span></li>
-                <li className="flex justify-between"><span>Sex - Sáb</span> <span className="font-bold text-primary">17h - 03h</span></li>
-                <li className="flex justify-between"><span>Dom</span> <span className="font-bold text-primary">16h - 23h</span></li>
-                <li className="flex justify-between text-white/20"><span>Segunda</span> <span>Fechado</span></li>
-              </ul>
+              <div className="space-y-4">
+                <div>
+                  <h5 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Almoço</h5>
+                  <ul className="text-white/60 text-sm space-y-1">
+                    <li className="flex justify-between">
+                      <span>Seg - Sáb</span> 
+                      <span className="font-bold text-white">11h - 15h</span>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h5 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Bar & Jantar</h5>
+                  <ul className="text-white/60 text-sm space-y-1">
+                    <li className="flex justify-between">
+                      <span>Ter - Qui</span> 
+                      <span className="font-bold text-white">17h - 01h</span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Sex - Sáb</span> 
+                      <span className="font-bold text-white">17h - 03h</span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span>Dom</span> 
+                      <span className="font-bold text-white">16h - 23h</span>
+                    </li>
+                    <li className="flex justify-between text-white/30">
+                      <span>Segunda</span> 
+                      <span>Fechado</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
             <div>
@@ -407,20 +526,33 @@ export default function App() {
       </footer>
 
       {/* --- Mobile Bottom Nav (Sticky) --- */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-charcoal/80 backdrop-blur-xl border-t border-white/10 px-6 py-4 flex justify-between items-center">
-        <a href="#menu" className="flex flex-col items-center gap-1 text-white/60 hover:text-primary transition-colors">
-          <Utensils size={20} />
-          <span className="text-[10px] font-bold uppercase tracking-widest">Menu</span>
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-charcoal/90 backdrop-blur-xl border-t border-white/10 px-4 py-3 flex justify-around items-center gap-1">
+        <a href="#menu" className="flex flex-col items-center justify-center w-12 text-white/60 hover:text-primary transition-colors">
+          <Utensils size={18} />
+          <span className="text-[9px] font-bold uppercase tracking-wider mt-0.5">Cardápio</span>
         </a>
+        
+        <a 
+          href="https://wa.me/5511986438100?text=Ol%C3%A1%21%20Gostaria%20de%20fazer%20um%20pedido."
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-green-600 text-white px-3.5 py-2.5 rounded-full font-bold shadow-md active:scale-95 transition-all flex items-center gap-1 text-xs"
+        >
+          <MessageSquare size={14} />
+          Peça agora
+        </a>
+
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="bg-primary text-charcoal-dark px-8 py-3 rounded-full font-bold shadow-lg transform -translate-y-6 border-4 border-charcoal-dark active:scale-95 transition-all"
+          className="bg-primary text-charcoal-dark px-3.5 py-2.5 rounded-full font-bold shadow-md active:scale-95 transition-all flex items-center gap-1 text-xs"
         >
+          <Calendar size={14} />
           Reserva
         </button>
-        <a href="tel:+551199999999" className="flex flex-col items-center gap-1 text-white/60 hover:text-primary transition-colors">
-          <Phone size={20} />
-          <span className="text-[10px] font-bold uppercase tracking-widest">Ligar</span>
+
+        <a href="tel:+5511986438100" className="flex flex-col items-center justify-center w-12 text-white/60 hover:text-primary transition-colors">
+          <Phone size={18} />
+          <span className="text-[9px] font-bold uppercase tracking-wider mt-0.5">Ligar</span>
         </a>
       </div>
 
@@ -440,7 +572,7 @@ export default function App() {
               className="bg-charcoal border border-white/10 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl relative"
             >
               <button 
-                onClick={() => { setIsModalOpen(false); setReservationStep(1); }}
+                onClick={handleCloseModal}
                 className="absolute top-4 right-4 text-white/40 hover:text-white"
               >
                 <X />
@@ -450,22 +582,45 @@ export default function App() {
                 {reservationStep === 1 ? (
                   <>
                     <h3 className="font-display text-3xl font-bold mb-2">Reservar Mesa</h3>
-                    <p className="text-white/50 mb-8 text-sm italic">Garanta seu lugar na melhor atmosfera de SP.</p>
+                    <p className="text-white/50 mb-6 text-sm italic">Garanta seu lugar no melhor bar do São Domingos.</p>
                     
-                    <div className="space-y-6">
+                    <div className="space-y-5">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-widest text-white/40 mb-1.5">Seu Nome</label>
+                        <input 
+                          type="text" 
+                          placeholder="Ex: João Silva" 
+                          value={resName} 
+                          onChange={(e) => setResName(e.target.value)} 
+                          className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 focus:outline-none focus:border-primary text-white text-sm" 
+                        />
+                      </div>
+
                       <div className="flex gap-4">
                         <div className="flex-1">
-                          <label className="block text-xs font-bold uppercase tracking-widest text-white/40 mb-2">Data</label>
+                          <label className="block text-xs font-bold uppercase tracking-widest text-white/40 mb-1.5">Data</label>
                           <div className="relative">
                             <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" size={18} />
-                            <input type="date" className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary" />
+                            <input 
+                              type="date" 
+                              value={resDate} 
+                              onChange={(e) => { setResDate(e.target.value); setValError(''); }} 
+                              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary text-white text-sm" 
+                            />
                           </div>
                         </div>
                         <div className="w-32">
-                          <label className="block text-xs font-bold uppercase tracking-widest text-white/40 mb-2">Pessoas</label>
+                          <label className="block text-xs font-bold uppercase tracking-widest text-white/40 mb-1.5">Pessoas</label>
                           <div className="relative">
                             <Users className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" size={18} />
-                            <input type="number" defaultValue={2} min={1} max={20} className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary" />
+                            <input 
+                              type="number" 
+                              value={resGuests} 
+                              onChange={(e) => setResGuests(Math.max(1, Number(e.target.value)))} 
+                              min={1} 
+                              max={20} 
+                              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary text-white text-sm" 
+                            />
                           </div>
                         </div>
                       </div>
@@ -474,19 +629,40 @@ export default function App() {
                         <label className="block text-xs font-bold uppercase tracking-widest text-white/40 mb-2">Horário disponível</label>
                         <div className="grid grid-cols-3 gap-2">
                           {['19:00', '19:30', '20:00', '20:30', '21:00', '21:30'].map(time => (
-                            <button key={time} className="bg-white/5 border border-white/10 hover:border-primary rounded-lg py-2 text-sm font-medium transition-colors">
+                            <button 
+                              key={time} 
+                              type="button"
+                              onClick={() => { setResTime(time); setValError(''); }}
+                              className={`rounded-lg py-2 text-sm font-medium transition-colors ${resTime === time ? 'bg-primary text-charcoal-dark font-bold' : 'bg-white/5 border border-white/10 hover:border-primary'}`}
+                            >
                               {time}
                             </button>
                           ))}
                         </div>
                       </div>
 
-                      <button 
-                        onClick={() => setReservationStep(2)}
-                        className="w-full bg-primary text-charcoal-dark font-bold py-4 rounded-xl shadow-lg mt-4 active:scale-95 transition-transform"
+                      {valError && (
+                        <p className="text-red-400 text-xs font-semibold">{valError}</p>
+                      )}
+
+                      <a 
+                        href={whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                          if (!resDate || !resTime) {
+                            e.preventDefault();
+                            setValError("Por favor, selecione data e horário para a reserva.");
+                          } else {
+                            setValError("");
+                            setReservationStep(2);
+                          }
+                        }}
+                        className="w-full bg-primary hover:bg-accent text-charcoal-dark font-bold py-4 rounded-xl shadow-lg mt-4 active:scale-95 transition-all flex items-center justify-center gap-2 text-sm"
                       >
-                        Continuar
-                      </button>
+                        <MessageSquare size={16} />
+                        Confirmar pelo WhatsApp
+                      </a>
                     </div>
                   </>
                 ) : (
@@ -499,9 +675,9 @@ export default function App() {
                       <CheckCircle size={40} />
                     </div>
                     <h3 className="text-3xl font-display font-bold mb-4">Pronto, Primo!</h3>
-                    <p className="text-white/60 mb-8 leading-relaxed">Sua mesa foi pré-reservada. Enviamos um link de confirmação para o seu WhatsApp/E-mail.</p>
+                    <p className="text-white/60 mb-8 leading-relaxed">Você foi redirecionado para o nosso WhatsApp com todas as suas informações pré-definidas.</p>
                     <button 
-                      onClick={() => { setIsModalOpen(false); setReservationStep(1); }}
+                      onClick={handleCloseModal}
                       className="w-full bg-white/10 hover:bg-white/20 border border-white/20 font-bold py-4 rounded-xl transition-all"
                     >
                       Voltar para o site
