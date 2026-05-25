@@ -82,6 +82,7 @@ const REVIEWS = [
 export default function App() {
   const [activeTab, setActiveTab] = useState<MenuItem['category']>('platters');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isOpenNow, setIsOpenNow] = useState(false);
   const [reservationStep, setReservationStep] = useState(1);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -204,7 +205,11 @@ export default function App() {
             </button>
           </div>
 
-          <button className="md:hidden text-white" aria-label="Menu">
+          <button 
+            onClick={() => setIsDrawerOpen(true)} 
+            className="md:hidden text-white p-2 hover:bg-white/5 rounded-lg transition-colors animate-pulse" 
+            aria-label="Menu"
+          >
             <MenuIcon />
           </button>
         </div>
@@ -241,35 +246,11 @@ export default function App() {
               GRANDES <span className="text-primary italic">PRIMOS.</span>
             </h1>
             
-            <p className="text-lg text-white/70 max-w-md mb-10 leading-relaxed">
+            <p className="text-lg text-white/70 max-w-md mb-6 leading-relaxed">
               Onde o rústico encontra o moderno. Gastronomia de autor, canecas zero grau e o melhor clima de SP.
             </p>
 
-            <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-              <a 
-                href="https://wa.me/5511986438100?text=Ol%C3%A1%21%20Gostaria%20de%20fazer%20um%20pedido."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-green-600 hover:bg-green-500 text-white px-8 py-3.5 rounded-full font-bold text-lg transition-all shadow-2xl flex items-center justify-center gap-2 active:scale-95"
-              >
-                <MessageSquare size={20} />
-                Peça agora
-              </a>
-              <button 
-                onClick={() => setIsModalOpen(true)}
-                className="bg-primary hover:bg-accent text-charcoal-dark px-8 py-3.5 rounded-full font-bold text-lg transition-all shadow-lg active:scale-95"
-              >
-                Reservar Mesa
-              </button>
-              <a 
-                href="#menu"
-                className="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-8 py-3.5 rounded-full font-bold text-lg transition-all flex items-center justify-center active:scale-95"
-              >
-                Ver Cardápio
-              </a>
-            </div>
-
-            <div className="mt-12 flex items-center gap-6">
+            <div className="mt-8 flex items-center gap-6">
               <div className="flex -space-x-3">
                 {[1,2,3,4].map(i => (
                   <div key={i} className="w-10 h-10 rounded-full border-2 border-charcoal-dark overflow-hidden transition-transform hover:scale-110">
@@ -294,16 +275,16 @@ export default function App() {
             className="flex justify-center items-center relative w-full h-full min-h-[300px] md:min-h-[450px]"
           >
             {/* Ambient Back Glow */}
-            <div className="absolute w-80 h-80 md:w-[28rem] md:h-[28rem] rounded-full bg-primary/20 blur-[90px] animate-pulse"></div>
+            <div className="absolute w-60 h-60 md:w-[28rem] md:h-[28rem] rounded-full bg-primary/20 blur-[90px] animate-pulse"></div>
             
             {/* Mascot Logo - Perfectly transparent background with no outer artificial borders */}
-<div className="relative z-10 rounded-full p-0 bg-transparent overflow-hidden max-w-[380px] xs:max-w-[420px] md:max-w-[580px] lg:max-w-[650px] flex items-center justify-center drop-shadow-[0_0_35px_rgba(245,158,11,0.25)] hover:scale-105 hover:rotate-1 transition-all duration-500 ease-out">
-  <img 
-    src={logoImg} 
-    alt="Bar dos Primos - Brasa e Conversa Logo" 
-    className="w-full h-auto rounded-full object-contain" 
-  />
-</div>          </motion.div>
+            <div className="relative z-10 rounded-none overflow-visible md:rounded-full md:overflow-hidden max-w-[245px] xs:max-w-[285px] sm:max-w-[325px] md:max-w-[580px] lg:max-w-[650px] flex items-center justify-center drop-shadow-[0_0_35px_rgba(245,158,11,0.25)] hover:scale-105 hover:rotate-1 transition-all duration-500 ease-out">
+              <img 
+                src={logoImg} 
+                alt="Bar dos Primos - Brasa e Conversa Logo" 
+                className="w-full h-auto rounded-none md:rounded-full object-contain" 
+              />
+            </div>          </motion.div>
         </div>
       </section>
 
@@ -686,6 +667,124 @@ export default function App() {
               </div>
             </motion.div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* --- Mobile Sidebar Drawer --- */}
+      <AnimatePresence>
+        {isDrawerOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsDrawerOpen(false)}
+              className="fixed inset-0 z-[80] bg-charcoal-dark/80 backdrop-blur-sm md:hidden"
+            />
+            
+            {/* Sidebar content */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'tween', duration: 0.3, ease: 'easeOut' }}
+              className="fixed top-0 right-0 bottom-0 z-[90] w-80 max-w-[85vw] bg-charcoal border-l border-white/10 p-6 flex flex-col justify-between shadow-2xl md:hidden overflow-y-auto pt-8"
+            >
+              <div>
+                {/* Drawer Header */}
+                <div className="flex items-center justify-between pb-6 border-b border-white/10 mb-8">
+                  <div className="flex items-center gap-2.5">
+                    <img src={logoImg} alt="Logo" className="w-8 h-8 object-contain rounded-full border border-primary/20" />
+                    <span className="font-display font-black text-lg tracking-tight uppercase italic text-glow-amber">Primos</span>
+                  </div>
+                  <button 
+                    onClick={() => setIsDrawerOpen(false)}
+                    className="p-1.5 rounded-lg bg-white/5 border border-white/10 text-white/60 hover:text-white transition-colors"
+                  >
+                    <X size={18} />
+                  </button>
+                </div>
+
+                {/* Primary CTA Buttons (as requested) */}
+                <h4 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-3">Acesso Rápido</h4>
+                <div className="space-y-3 mb-8">
+                  <a 
+                    href="https://wa.me/5511986438100?text=Ol%C3%A1%21%20Gostaria%20de%20fazer%20um%20pedido."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setIsDrawerOpen(false)}
+                    className="flex items-center gap-3.5 bg-green-600/10 hover:bg-green-600/20 border border-green-600/30 text-green-400 p-4 rounded-xl transition-all font-semibold text-sm cursor-pointer"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-green-600/20 flex items-center justify-center text-green-400 shrink-0">
+                      <MessageSquare size={16} />
+                    </div>
+                    <span>Peça Agora</span>
+                    <ChevronRight size={14} className="ml-auto opacity-50" />
+                  </a>
+
+                  <button 
+                    onClick={() => {
+                      setIsDrawerOpen(false);
+                      setIsModalOpen(true);
+                    }}
+                    className="w-full flex items-center gap-3.5 bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary p-4 rounded-xl transition-all font-semibold text-sm text-left cursor-pointer"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary shrink-0">
+                      <Calendar size={16} />
+                    </div>
+                    <span>Reservar Mesa</span>
+                    <ChevronRight size={14} className="ml-auto opacity-50" />
+                  </button>
+
+                  <a 
+                    href="#menu"
+                    onClick={() => setIsDrawerOpen(false)}
+                    className="flex items-center gap-3.5 bg-white/5 hover:bg-white/10 border border-white/10 text-white p-4 rounded-xl transition-all font-semibold text-sm cursor-pointer"
+                  >
+                    <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white shrink-0">
+                      <Utensils size={16} />
+                    </div>
+                    <span>Ver Cardápio</span>
+                    <ChevronRight size={14} className="ml-auto opacity-50" />
+                  </a>
+                </div>
+
+                {/* Additional Links */}
+                <h4 className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-3">Navegação</h4>
+                <div className="space-y-1">
+                  <a 
+                    href="#vibe" 
+                    onClick={() => setIsDrawerOpen(false)}
+                    className="flex items-center gap-3 text-white/70 hover:text-primary py-2.5 px-3 rounded-lg hover:bg-white/5 transition-all text-sm font-medium"
+                  >
+                    <Star size={16} />
+                    <span>Nossa Vibe</span>
+                  </a>
+                  <a 
+                    href="#contato" 
+                    onClick={() => setIsDrawerOpen(false)}
+                    className="flex items-center gap-3 text-white/70 hover:text-primary py-2.5 px-3 rounded-lg hover:bg-white/5 transition-all text-sm font-medium"
+                  >
+                    <MapPin size={16} />
+                    <span>Onde Estamos</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Drawer Footer info */}
+              <div className="pt-6 border-t border-white/5 space-y-4 text-xs">
+                <div className="flex items-center gap-2 text-white/60">
+                  <Clock size={14} className="text-primary" />
+                  <span>Almoço: Seg-Sáb 11h às 15h</span>
+                </div>
+                <div className="flex items-center gap-2 text-white/60">
+                  <Phone size={14} className="text-primary" />
+                  <span>(11) 98643-8100</span>
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </div>
