@@ -431,9 +431,8 @@ export default function App() {
                 <img src="https://images.unsplash.com/photo-1574096079513-d8259312b785?auto=format&fit=crop&q=80&w=600" className="rounded-2xl w-full h-[300px] object-cover hover:scale-[1.02] transition-transform" alt="Bar food" />
                 <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&q=80&w=600" className="rounded-2xl w-full h-[200px] object-cover hover:scale-[1.02] transition-transform" alt="Cocktails" />
               </div>
-              <div className="space-y-4 pt-8">
-                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600" className="rounded-2xl w-full h-[200px] object-cover hover:scale-[1.02] transition-transform" alt="Bar interior" />
-                <img src="https://images.unsplash.com/photo-1536935338218-84ca21616c21?auto=format&fit=crop&q=80&w=600" className="rounded-2xl w-full h-[300px] object-cover hover:scale-[1.02] transition-transform" alt="Crowd" />
+              <div className="space-y-4">
+                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600" className="rounded-2xl w-full h-[516px] object-cover hover:scale-[1.02] transition-transform" alt="Bar interior" />
               </div>
               
               {/* Decorative amber glow */}
