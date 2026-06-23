@@ -180,7 +180,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       <script type="application/ld+json">
         {JSON.stringify(schemaMarkup)}
       </script>
@@ -216,7 +216,7 @@ export default function App() {
       </nav>
 
       {/* --- Hero Section --- */}
-      <section className="relative h-[100vh] flex items-center overflow-hidden">
+      <section className="relative min-h-[100dvh] flex items-center overflow-hidden pt-28 pb-20 md:py-0">
         {/* Background Image / Overlay */}
         <div className="absolute inset-0 z-0">
           <img 
@@ -241,7 +241,7 @@ export default function App() {
               {isOpenNow ? 'Aberto agora • Happy Hour on' : 'Fechado • Abre amanhã às 17h'}
             </div>
             
-            <h1 className="font-display text-6xl md:text-8xl font-bold leading-[0.9] mb-6 tracking-tighter">
+            <h1 className="font-display text-5xl sm:text-6xl md:text-8xl font-bold leading-[0.9] mb-6 tracking-tighter break-words">
               BONS DRINKS.<br/>
               GRANDES <span className="text-primary italic">PRIMOS.</span>
             </h1>
@@ -289,7 +289,7 @@ export default function App() {
       </section>
 
       {/* --- Menu Section --- */}
-      <section id="menu" className="py-24 bg-charcoal">
+      <section id="menu" className="py-16 md:py-24 bg-charcoal">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">Cardápio Inteligente</h2>
@@ -339,7 +339,7 @@ export default function App() {
           </div>
 
           {/* Grid */}
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             <AnimatePresence mode="wait">
               {filteredMenu.map((item) => (
                 <motion.div
@@ -372,9 +372,9 @@ export default function App() {
       </section>
 
       {/* --- Social Proof & Vibe --- */}
-      <section id="vibe" className="py-24 bg-charcoal-dark overflow-hidden">
+      <section id="vibe" className="py-16 md:py-24 bg-charcoal-dark overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
             <div>
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-8 leading-tight">
                 UMA ATMOSFERA<br/> QUE <span className="text-primary">CONECTA.</span>
@@ -407,13 +407,13 @@ export default function App() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 relative">
-              <div className="space-y-4">
-                <img src="https://images.unsplash.com/photo-1574096079513-d8259312b785?auto=format&fit=crop&q=80&w=600" className="rounded-2xl w-full h-[300px] object-cover hover:scale-[1.02] transition-transform" alt="Bar food" />
-                <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&q=80&w=600" className="rounded-2xl w-full h-[200px] object-cover hover:scale-[1.02] transition-transform" alt="Cocktails" />
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 relative">
+              <div className="space-y-3 sm:space-y-4">
+                <img src="https://images.unsplash.com/photo-1574096079513-d8259312b785?auto=format&fit=crop&q=80&w=600" className="rounded-2xl w-full h-48 sm:h-[220px] md:h-[300px] object-cover hover:scale-[1.02] transition-transform" alt="Bar food" />
+                <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&q=80&w=600" className="rounded-2xl w-full h-32 sm:h-[160px] md:h-[200px] object-cover hover:scale-[1.02] transition-transform" alt="Cocktails" />
               </div>
-              <div className="space-y-4">
-                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600" className="rounded-2xl w-full h-[516px] object-cover hover:scale-[1.02] transition-transform" alt="Bar interior" />
+              <div className="space-y-3 sm:space-y-4">
+                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=600" className="rounded-2xl w-full h-[332px] sm:h-[396px] md:h-[516px] object-cover hover:scale-[1.02] transition-transform" alt="Bar interior" />
               </div>
               
               {/* Decorative amber glow */}
@@ -424,7 +424,7 @@ export default function App() {
       </section>
 
       {/* --- Footer & Contact --- */}
-      <footer id="contato" className="bg-charcoal border-t border-white/5 pt-24 pb-32 md:pb-12">
+      <footer id="contato" className="bg-charcoal border-t border-white/5 pt-16 md:pt-24 pb-28 md:pb-12">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-12 mb-16">
             <div className="md:col-span-1">
@@ -506,8 +506,8 @@ export default function App() {
       </footer>
 
       {/* --- Mobile Bottom Nav (Sticky) --- */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-charcoal/90 backdrop-blur-xl border-t border-white/10 px-4 py-3 flex justify-around items-center gap-1">
-        <a href="#menu" className="flex flex-col items-center justify-center w-12 text-white/60 hover:text-primary transition-colors">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-charcoal/90 backdrop-blur-xl border-t border-white/10 px-2 py-3 flex justify-evenly items-center gap-1 sm:gap-2">
+        <a href="#menu" className="flex flex-col items-center justify-center w-12 text-white/60 hover:text-primary transition-colors shrink-0">
           <Utensils size={18} />
           <span className="text-[9px] font-bold uppercase tracking-wider mt-0.5">Cardápio</span>
         </a>
@@ -516,21 +516,21 @@ export default function App() {
           href="https://wa.me/5511986438100?text=Ol%C3%A1%21%20Gostaria%20de%20fazer%20um%20pedido."
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-green-600 text-white px-3.5 py-2.5 rounded-full font-bold shadow-md active:scale-95 transition-all flex items-center gap-1 text-xs"
+          className="flex-1 bg-green-600 text-white py-2.5 px-2 rounded-full font-bold shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 text-[11px] sm:text-xs min-w-0"
         >
-          <MessageSquare size={14} />
-          Peça agora
+          <MessageSquare size={14} className="shrink-0" />
+          <span className="truncate">Peça agora</span>
         </a>
 
         <button 
           onClick={() => setIsModalOpen(true)}
-          className="bg-primary text-charcoal-dark px-3.5 py-2.5 rounded-full font-bold shadow-md active:scale-95 transition-all flex items-center gap-1 text-xs"
+          className="flex-1 bg-primary text-charcoal-dark py-2.5 px-2 rounded-full font-bold shadow-md active:scale-95 transition-all flex items-center justify-center gap-1.5 text-[11px] sm:text-xs min-w-0"
         >
-          <Calendar size={14} />
-          Reserva
+          <Calendar size={14} className="shrink-0" />
+          <span className="truncate">Reserva</span>
         </button>
 
-        <a href="tel:+5511986438100" className="flex flex-col items-center justify-center w-12 text-white/60 hover:text-primary transition-colors">
+        <a href="tel:+5511986438100" className="flex flex-col items-center justify-center w-12 text-white/60 hover:text-primary transition-colors shrink-0">
           <Phone size={18} />
           <span className="text-[9px] font-bold uppercase tracking-wider mt-0.5">Ligar</span>
         </a>
@@ -576,7 +576,7 @@ export default function App() {
                         />
                       </div>
 
-                      <div className="flex gap-4">
+                      <div className="flex flex-col sm:flex-row gap-4">
                         <div className="flex-1">
                           <label className="block text-xs font-bold uppercase tracking-widest text-white/40 mb-1.5">Data</label>
                           <div className="relative">
@@ -589,7 +589,7 @@ export default function App() {
                             />
                           </div>
                         </div>
-                        <div className="w-32">
+                        <div className="w-full sm:w-32">
                           <label className="block text-xs font-bold uppercase tracking-widest text-white/40 mb-1.5">Pessoas</label>
                           <div className="relative">
                             <Users className="absolute left-4 top-1/2 -translate-y-1/2 text-primary" size={18} />
