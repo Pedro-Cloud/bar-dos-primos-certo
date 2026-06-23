@@ -18,6 +18,7 @@ import {
   Mail
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { BUSINESS_HOURS, checkIsOpen } from './businessHours';
 // @ts-ignore
 import logoImg from './assets/images/logo_primos_clean_1779384509346.png';
 
@@ -84,6 +85,7 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isOpenNow, setIsOpenNow] = useState(false);
+  const [nextOpenStr, setNextOpenStr] = useState('');
   const [reservationStep, setReservationStep] = useState(1);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -119,14 +121,9 @@ export default function App() {
   // Check if open logic
   useEffect(() => {
     const checkStatus = () => {
-      const now = new Date();
-      const day = now.getDay(); // 0 is Sunday
-      const hour = now.getHours();
-      
-      // Example: Open Tue-Sun, 17h to 02h
-      const isOpenDay = day !== 1; // Not Monday
-      const isOpenHour = (hour >= 17 || hour < 2);
-      setIsOpenNow(isOpenDay && isOpenHour);
+      const { isOpen, nextOpenStr } = checkIsOpen(new Date());
+      setIsOpenNow(isOpen);
+      setNextOpenStr(nextOpenStr);
     };
     checkStatus();
     const timer = setInterval(checkStatus, 60000);
@@ -180,7 +177,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden">
+    <div className="relative w-full min-h-screen overflow-x-hidden bg-charcoal text-white">
       <script type="application/ld+json">
         {JSON.stringify(schemaMarkup)}
       </script>
@@ -238,7 +235,7 @@ export default function App() {
                 <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isOpenNow ? 'bg-green-400' : 'bg-red-400'}`}></span>
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${isOpenNow ? 'bg-green-500' : 'bg-red-500'}`}></span>
               </span>
-              {isOpenNow ? 'Aberto agora • Happy Hour on' : 'Fechado • Abre amanhã às 17h'}
+              {isOpenNow ? 'Aberto agora • Vem pro bar!' : `Fechado • ${nextOpenStr}`}
             </div>
             
             <h1 className="font-display text-5xl sm:text-6xl md:text-8xl font-bold leading-[0.9] mb-6 tracking-tighter break-words">
@@ -324,7 +321,7 @@ export default function App() {
                 className="inline-flex items-center gap-2.5 bg-primary/10 border border-primary/20 text-primary px-5 py-3 rounded-2xl text-sm font-semibold tracking-wide shadow-sm"
               >
                 <Clock size={16} />
-                <span>Horário de almoço: <strong>segunda a sábado, das 11h às 15h</strong></span>
+                <span>Horário de almoço: <strong>{BUSINESS_HOURS.lunch[0].label.toLowerCase()}, das {BUSINESS_HOURS.lunch[0].open}h às {BUSINESS_HOURS.lunch[0].close}h</strong></span>
               </motion.div>
             ) : (
               <motion.div 
@@ -455,31 +452,23 @@ export default function App() {
                 <div>
                   <h5 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Almoço</h5>
                   <ul className="text-white/60 text-sm space-y-1">
-                    <li className="flex justify-between">
-                      <span>Seg - Sáb</span> 
-                      <span className="font-bold text-white">11h - 15h</span>
-                    </li>
+                    {BUSINESS_HOURS.lunch.map((period, idx) => (
+                      <li key={idx} className="flex justify-between gap-4">
+                        <span>{period.label}</span>
+                        <span className="font-bold text-white text-right">{period.time}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div>
                   <h5 className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">Bar & Jantar</h5>
                   <ul className="text-white/60 text-sm space-y-1">
-                    <li className="flex justify-between">
-                      <span>Ter - Qui</span> 
-                      <span className="font-bold text-white">17h - 01h</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Sex - Sáb</span> 
-                      <span className="font-bold text-white">17h - 03h</span>
-                    </li>
-                    <li className="flex justify-between">
-                      <span>Dom</span> 
-                      <span className="font-bold text-white">16h - 23h</span>
-                    </li>
-                    <li className="flex justify-between text-white/30">
-                      <span>Segunda</span> 
-                      <span>Fechado</span>
-                    </li>
+                    {BUSINESS_HOURS.dinner.map((period, idx) => (
+                      <li key={idx} className={`flex justify-between gap-4 ${period.time === 'Fechado' ? 'text-white/30' : ''}`}>
+                        <span>{period.label}</span>
+                        <span className={`text-right ${period.time === 'Fechado' ? '' : 'font-bold text-white'}`}>{period.time}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -549,20 +538,20 @@ export default function App() {
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="bg-charcoal border border-white/10 w-full max-w-md rounded-3xl overflow-hidden shadow-2xl relative"
+              className="bg-charcoal border border-white/10 w-full max-w-md rounded-2xl md:rounded-3xl overflow-y-auto max-h-[90dvh] shadow-2xl relative scrollbar-hide"
             >
               <button 
                 onClick={handleCloseModal}
-                className="absolute top-4 right-4 text-white/40 hover:text-white"
+                className="absolute top-4 right-4 text-white/40 hover:text-white z-10"
               >
                 <X />
               </button>
 
-              <div className="p-8">
+              <div className="p-6 sm:p-8">
                 {reservationStep === 1 ? (
                   <>
-                    <h3 className="font-display text-3xl font-bold mb-2">Reservar Mesa</h3>
-                    <p className="text-white/50 mb-6 text-sm italic">Garanta seu lugar no melhor bar do São Domingos.</p>
+                    <h3 className="font-display text-2xl sm:text-3xl font-bold mb-2">Reservar Mesa</h3>
+                    <p className="text-white/50 mb-6 text-xs sm:text-sm italic">Garanta seu lugar no melhor bar do São Domingos.</p>
                     
                     <div className="space-y-5">
                       <div>
@@ -572,7 +561,7 @@ export default function App() {
                           placeholder="Ex: João Silva" 
                           value={resName} 
                           onChange={(e) => setResName(e.target.value)} 
-                          className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 focus:outline-none focus:border-primary text-white text-sm" 
+                          className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 focus:outline-none focus:border-primary text-white text-base sm:text-sm" 
                         />
                       </div>
 
@@ -585,7 +574,7 @@ export default function App() {
                               type="date" 
                               value={resDate} 
                               onChange={(e) => { setResDate(e.target.value); setValError(''); }} 
-                              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary text-white text-sm" 
+                              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary text-white text-base sm:text-sm" 
                             />
                           </div>
                         </div>
@@ -599,7 +588,7 @@ export default function App() {
                               onChange={(e) => setResGuests(Math.max(1, Number(e.target.value)))} 
                               min={1} 
                               max={20} 
-                              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary text-white text-sm" 
+                              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:outline-none focus:border-primary text-white text-base sm:text-sm" 
                             />
                           </div>
                         </div>
@@ -776,7 +765,10 @@ export default function App() {
               <div className="pt-6 border-t border-white/5 space-y-4 text-xs">
                 <div className="flex items-center gap-2 text-white/60">
                   <Clock size={14} className="text-primary" />
-                  <span>Almoço: Seg-Sáb 11h às 15h</span>
+                  <div className="flex flex-col gap-1">
+                    <span>Almoço: {BUSINESS_HOURS.lunch[0].label.replace(' - ', '-')} {BUSINESS_HOURS.lunch[0].open}h às {BUSINESS_HOURS.lunch[0].close}h</span>
+                    <span>Bar: {BUSINESS_HOURS.dinner[0].label.replace(' - ', '-')} {BUSINESS_HOURS.dinner[0].open}h às {BUSINESS_HOURS.dinner[0].close % 24}h | {BUSINESS_HOURS.dinner[1].label.replace(' - ', '-')} {BUSINESS_HOURS.dinner[1].open}h às 0{BUSINESS_HOURS.dinner[1].close % 24}h</span>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2 text-white/60">
                   <Phone size={14} className="text-primary" />
